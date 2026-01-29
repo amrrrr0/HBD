@@ -1,0 +1,1087 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Special For Triyani</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+      /* --- VARIABLES --- */
+      :root {
+        --bg-dark: #050505;
+        --accent: #d63384;
+        --accent-gold: #ffd700;
+        --text-main: #fff;
+
+        --font-display: "Cormorant Garamond", serif;
+        --font-body: "Outfit", sans-serif;
+        --font-script: "Allura", cursive;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background-color: var(--bg-dark);
+        color: var(--text-main);
+        font-family: var(--font-body);
+        height: 100vh;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* --- LAYER 100: INTRO SCREEN --- */
+      #intro-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at center, #222, #000);
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 1;
+        visibility: visible;
+        transition:
+          opacity 2s ease-in-out,
+          visibility 2s linear;
+      }
+      #intro-overlay.melt-away {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .intro-text {
+        text-align: center;
+        z-index: 10;
+        margin-top: 20px;
+        opacity: 0;
+        animation: fadeInUp 1s ease forwards 1s;
+      }
+      .intro-text h2 {
+        font-family: var(--font-script);
+        font-size: 3.5rem;
+        color: var(--accent-gold);
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        font-weight: 400;
+      }
+      .intro-text p {
+        font-family: var(--font-body);
+        font-size: 0.9rem;
+        color: #ccc;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        animation: pulseText 2s infinite;
+        margin-top: 5px;
+      }
+
+      .balloon {
+        position: absolute;
+        bottom: -100px;
+        width: 50px;
+        height: 60px;
+        background: var(--accent);
+        border-radius: 50%;
+        opacity: 0.8;
+        animation: floatBalloon 6s ease-in infinite;
+        z-index: 1;
+      }
+      .balloon::before {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        width: 2px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.5);
+        transform: translateX(-50%);
+      }
+      @keyframes floatBalloon {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateY(-120vh) rotate(10deg);
+          opacity: 0;
+        }
+      }
+
+      /* Cake CSS */
+      .cake-wrapper {
+        position: relative;
+        width: 300px;
+        height: 320px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        margin-bottom: 20px;
+        z-index: 10;
+        transform: scale(0);
+        animation: popUpCake 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards
+          0.5s;
+      }
+      @keyframes popUpCake {
+        to {
+          transform: scale(1);
+        }
+      }
+      .cake-tier {
+        position: absolute;
+        bottom: 0;
+        background: linear-gradient(to right, #fff0f5, #ffe4e1);
+        border-radius: 15px 15px 5px 5px;
+        box-shadow:
+          0 10px 20px rgba(0, 0, 0, 0.3),
+          inset 0 -5px 10px rgba(0, 0, 0, 0.05);
+        display: flex;
+        justify-content: center;
+      }
+      .tier-bottom {
+        width: 240px;
+        height: 100px;
+        z-index: 1;
+      }
+      .tier-top {
+        width: 170px;
+        height: 90px;
+        bottom: 100px;
+        z-index: 2;
+      }
+      .gold-ribbon {
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+        height: 15px;
+        background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+      .topping-container {
+        position: absolute;
+        top: -10px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        z-index: 5;
+      }
+      .macaron {
+        width: 18px;
+        height: 14px;
+        background: var(--accent);
+        border-radius: 50%;
+        box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+        transform: rotate(-10deg);
+      }
+      .gold-ball {
+        width: 12px;
+        height: 12px;
+        background: var(--accent-gold);
+        border-radius: 50%;
+        box-shadow: inset -2px -2px rgba(0, 0, 0, 0.3);
+        margin-top: 5px;
+      }
+      .candle-container {
+        position: absolute;
+        bottom: 185px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+      }
+      .candle {
+        width: 12px;
+        height: 70px;
+        background: linear-gradient(to right, #fff, #e0e0e0);
+        border-radius: 4px;
+        box-shadow:
+          0 2px 5px rgba(0, 0, 0, 0.2),
+          inset 0 -5px 5px rgba(0, 0, 0, 0.1);
+      }
+      .flame {
+        position: absolute;
+        top: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 18px;
+        height: 30px;
+        border-radius: 50% 50% 20% 20%;
+        background: radial-gradient(
+          ellipse at center,
+          #ffffd1 0%,
+          #fff7a8 40%,
+          #ffc107 100%
+        );
+        box-shadow:
+          0 0 20px #ffc107,
+          0 0 40px #ff9800;
+        animation: flicker 0.8s infinite alternate ease-in-out;
+        cursor: pointer;
+        transition: opacity 0.3s;
+      }
+      .flame:hover {
+        transform: translateX(-50%) scale(1.1);
+      }
+      @keyframes flicker {
+        0% {
+          transform: translateX(-50%) scale(1) rotate(-2deg);
+          opacity: 0.9;
+        }
+        100% {
+          transform: translateX(-50%) scale(1.05) rotate(2deg);
+          opacity: 1;
+        }
+      }
+      .smoke {
+        position: absolute;
+        top: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 15px;
+        height: 30px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 50%;
+        opacity: 0;
+        pointer-events: none;
+      }
+      @keyframes smokeAnim {
+        0% {
+          opacity: 0.8;
+          transform: translateX(-50%) translateY(0) scale(0.5);
+          filter: blur(2px);
+        }
+        100% {
+          opacity: 0;
+          transform: translateX(-50%) translateY(-60px) scale(3);
+          filter: blur(10px);
+        }
+      }
+      .flowers-ring {
+        position: absolute;
+        width: 380px;
+        height: 380px;
+        border-radius: 50%;
+        animation: rotateRing 30s linear infinite;
+        pointer-events: none;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .flower {
+        position: absolute;
+        font-size: 1.2rem;
+        color: #ffb7b2;
+        filter: drop-shadow(0 0 8px rgba(255, 183, 178, 0.6));
+      }
+      .f1 {
+        top: 10px;
+        left: 50%;
+      }
+      .f2 {
+        bottom: 10px;
+        left: 50%;
+      }
+      .f3 {
+        left: 10px;
+        top: 50%;
+      }
+      .f4 {
+        right: 10px;
+        top: 50%;
+      }
+      .f5 {
+        top: 25%;
+        left: 25%;
+      }
+      .f6 {
+        top: 25%;
+        right: 25%;
+      }
+      .f7 {
+        bottom: 25%;
+        left: 25%;
+      }
+      .f8 {
+        bottom: 25%;
+        right: 25%;
+      }
+      @keyframes rotateRing {
+        from {
+          transform: translate(-50%, -50%) rotate(0deg);
+        }
+        to {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+      @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes pulseText {
+        0%,
+        100% {
+          opacity: 0.6;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      /* --- BACKGROUND LAYERS --- */
+      #main-content {
+        opacity: 0;
+        transition: opacity 1.5s ease 0.2s;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        flex-direction: column;
+      }
+
+      #stars-container,
+      .bg-hearts-container,
+      .bg-polaroids-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+      #stars-container {
+        z-index: -3;
+      }
+      .bg-hearts-container {
+        z-index: -2;
+      }
+      .bg-polaroids-container {
+        z-index: 0;
+      }
+
+      .star {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        animation: twinkle infinite ease-in-out;
+      }
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 0.8;
+          box-shadow: 0 0 4px white;
+        }
+      }
+      .heart-floater {
+        position: absolute;
+        bottom: -10vh;
+        font-size: 2rem;
+        color: var(--accent);
+        opacity: 0.5;
+        filter: blur(1px);
+        animation: floatUp linear infinite;
+      }
+      .heart-floater:nth-child(even) {
+        color: var(--accent-blue);
+      }
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0);
+          opacity: 0.5;
+        }
+        100% {
+          transform: translateY(-120vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      /* Polaroid Style */
+      .polaroid-item {
+        position: absolute;
+        top: 110%;
+        animation: floatMeliuk linear infinite;
+        z-index: 0;
+        opacity: 0.9;
+      }
+      .polaroid-frame {
+        background: #fff;
+        padding: 10px 10px 30px 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        width: 150px;
+        transition: transform 0.3s;
+      }
+      .polaroid-frame img {
+        width: 100%;
+        height: 140px;
+        object-fit: cover;
+        border: 1px solid #eee;
+      }
+      @keyframes floatMeliuk {
+        0% {
+          top: 110%;
+          transform: translateX(0) rotate(var(--rot-0));
+        }
+        33% {
+          transform: translateX(var(--sway-1)) rotate(var(--rot-1));
+        }
+        66% {
+          transform: translateX(var(--sway-2)) rotate(var(--rot-2));
+        }
+        100% {
+          top: -20%;
+          transform: translateX(var(--sway-3)) rotate(var(--rot-3));
+        }
+      }
+
+      /* --- BENTO GRID --- */
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: auto auto auto;
+        gap: 20px;
+        max-width: 1000px;
+        width: 100%;
+        z-index: 10;
+      }
+      .card {
+        background: rgba(18, 18, 18, 0.75);
+        backdrop-filter: blur(12px);
+        border: 1px solid #222;
+        border-radius: 24px;
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+        transition: 0.3s;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(214, 51, 132, 0.3);
+      }
+      .col-span-2 {
+        grid-column: span 2;
+      }
+      .row-span-2 {
+        grid-row: span 2;
+      }
+
+      h1 {
+        font-family: var(--font-display);
+        font-size: 3.5rem;
+        line-height: 1;
+        margin-bottom: 5px;
+        font-weight: 600;
+      }
+      h2 {
+        font-family: var(--font-script);
+        font-size: 2.2rem;
+        margin-bottom: 10px;
+        color: var(--accent);
+      }
+      p {
+        font-family: var(--font-body);
+        font-size: 1rem;
+        color: #aaa;
+        line-height: 1.6;
+        font-weight: 300;
+      }
+      .highlight {
+        color: var(--accent);
+        font-family: var(--font-script);
+        font-size: 1.2em;
+      }
+
+      .card-hero {
+        background: linear-gradient(
+          135deg,
+          rgba(26, 26, 26, 0.8),
+          rgba(10, 10, 10, 0.8)
+        );
+        justify-content: flex-end;
+      }
+      .card-photo {
+        padding: 0;
+      }
+      .card-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .card-date .big-number {
+        font-family: var(--font-display);
+        font-size: 5rem;
+        font-weight: 700;
+        color: var(--accent);
+        line-height: 0.9;
+      }
+      .card-music {
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+      }
+      .vinyl {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: url("https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=2070&auto=format&fit=crop")
+          center/cover;
+        border: 2px solid #333;
+        animation: spin 5s linear infinite;
+        animation-play-state: paused;
+      }
+      .play-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #fff;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s;
+      }
+      .play-btn:hover {
+        background: var(--accent);
+        color: white;
+      }
+      .card-letter {
+        overflow-y: auto;
+        max-height: 250px;
+      }
+      .card-letter::-webkit-scrollbar {
+        width: 4px;
+      }
+      .card-letter::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 4px;
+      }
+      .card-stats {
+        justify-content: center;
+        font-family: "Courier New", monospace;
+        font-size: 0.85rem;
+        border: 1px dashed #333;
+      }
+      .stat-line {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+      }
+      .stat-val {
+        color: var(--accent);
+      }
+      @keyframes spin {
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* --- SWIPE UP BUTTON --- */
+      .end-show-btn-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+        z-index: 20;
+        opacity: 0;
+        animation: fadeInUp 1s ease forwards 3s; /* Muncul belakangan */
+      }
+      .btn-finish {
+        background: transparent;
+        color: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 10px 25px;
+        border-radius: 30px;
+        font-family: var(--font-body);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        cursor: pointer;
+        transition: 0.3s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+      }
+      .btn-finish:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        border-color: #fff;
+      }
+      .btn-finish i {
+        animation: bounceUp 1.5s infinite;
+      }
+      @keyframes bounceUp {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+      }
+
+      /* --- CLOSING SCREEN (END SHOW) --- */
+      #closing-screen {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 101; /* Di atas segalanya */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        transform: translateY(100%); /* Sembunyi di bawah */
+        transition: transform 1.5s cubic-bezier(0.86, 0, 0.07, 1);
+      }
+      #closing-screen.active-closing {
+        transform: translateY(0);
+      }
+
+      .final-title {
+        font-family: var(--font-display);
+        font-size: 4rem;
+        color: var(--accent);
+        margin-bottom: 10px;
+        opacity: 0;
+      }
+      .final-sub {
+        font-family: var(--font-body);
+        font-size: 1.1rem;
+        color: #888;
+        margin-bottom: 30px;
+        opacity: 0;
+      }
+      .btn-replay {
+        padding: 12px 30px;
+        background: #fff;
+        color: #000;
+        border: none;
+        border-radius: 50px;
+        font-family: var(--font-body);
+        font-weight: bold;
+        cursor: pointer;
+        opacity: 0;
+        transition: 0.3s;
+      }
+      .btn-replay:hover {
+        transform: scale(1.1);
+        background: var(--accent);
+        color: #fff;
+      }
+
+      /* Animasi elemen closing */
+      .active-closing .final-title {
+        animation: fadeInUp 1s ease forwards 0.5s;
+      }
+      .active-closing .final-sub {
+        animation: fadeInUp 1s ease forwards 0.8s;
+      }
+      .active-closing .btn-replay {
+        animation: fadeInUp 1s ease forwards 1.2s;
+      }
+
+      @media (max-width: 768px) {
+        .grid-container {
+          grid-template-columns: 1fr;
+        }
+        .col-span-2,
+        .row-span-2 {
+          grid-column: span 1;
+          grid-row: span 1;
+        }
+        .card-photo {
+          height: 350px;
+        }
+        .cake-wrapper {
+          transform: scale(0.8);
+          margin-bottom: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="intro-overlay">
+      <div
+        class="balloon"
+        style="left: 10%; background: #ff4d6d; animation-duration: 5s"
+      ></div>
+      <div
+        class="balloon"
+        style="
+          right: 15%;
+          background: #a04dff;
+          animation-duration: 7s;
+          animation-delay: 1s;
+        "
+      ></div>
+      <div
+        class="balloon"
+        style="
+          left: 20%;
+          background: #ffd700;
+          animation-duration: 6s;
+          animation-delay: 2s;
+        "
+      ></div>
+      <div
+        class="balloon"
+        style="
+          right: 25%;
+          background: #ff4d6d;
+          animation-duration: 5.5s;
+          animation-delay: 0.5s;
+        "
+      ></div>
+
+      <div class="cake-wrapper">
+        <div class="flowers-ring">
+          <i class="fas fa-flower flower f1">✿</i
+          ><i class="fas fa-flower flower f2">❀</i>
+          <i class="fas fa-flower flower f3">✿</i
+          ><i class="fas fa-flower flower f4">❀</i>
+          <i class="fas fa-flower flower f5">✿</i
+          ><i class="fas fa-flower flower f6">❀</i>
+          <i class="fas fa-flower flower f7">✿</i
+          ><i class="fas fa-flower flower f8">❀</i>
+        </div>
+        <div class="cake-tier tier-bottom"><div class="gold-ribbon"></div></div>
+        <div class="cake-tier tier-top">
+          <div class="gold-ribbon"></div>
+          <div class="topping-container">
+            <div class="macaron" style="background: #ffb7b2"></div>
+            <div class="gold-ball"></div>
+            <div class="macaron" style="background: #e1bee7"></div>
+            <div class="gold-ball"></div>
+            <div class="macaron" style="background: #ffb7b2"></div>
+          </div>
+        </div>
+        <div class="candle-container">
+          <div class="candle"></div>
+          <div class="flame" id="flame" onclick="blowCandle()"></div>
+          <div class="smoke" id="smoke"></div>
+        </div>
+      </div>
+      <div class="intro-text">
+        <h2>Make a Wish, Triyani</h2>
+        <p>Sentuh Api untuk Meniup Lilin</p>
+      </div>
+    </div>
+
+    <div id="stars-container"></div>
+    <div class="bg-hearts-container">
+      <i
+        class="fas fa-heart heart-floater"
+        style="left: 5%; animation-duration: 12s"
+      ></i>
+      <i
+        class="fas fa-heart heart-floater"
+        style="left: 25%; animation-duration: 10s"
+      ></i>
+      <i
+        class="fas fa-heart heart-floater"
+        style="left: 45%; animation-duration: 14s"
+      ></i>
+      <i
+        class="fas fa-heart heart-floater"
+        style="left: 65%; animation-duration: 11s"
+      ></i>
+      <i
+        class="fas fa-heart heart-floater"
+        style="left: 85%; animation-duration: 16s"
+      ></i>
+    </div>
+
+    <div class="bg-polaroids-container" id="polaroid-container"></div>
+
+    <div id="main-content">
+      <div class="grid-container">
+        <div class="card col-span-2 card-hero">
+          <i
+            class="fas fa-heart"
+            style="
+              position: absolute;
+              top: 20px;
+              right: 20px;
+              font-size: 2rem;
+              color: var(--accent);
+            "
+          ></i>
+          <p
+            style="
+              text-transform: uppercase;
+              letter-spacing: 2px;
+              font-size: 0.8rem;
+              font-weight: 500;
+            "
+          >
+            The Birthday Girl
+          </p>
+          <h1>Triyani <span class="highlight">Putri</span></h1>
+          <p>Happy Birthday & My Valentine.</p>
+        </div>
+        <div class="card card-date">
+          <span style="letter-spacing: 3px">FEBRUARY</span
+          ><span class="big-number">14</span
+          ><span style="letter-spacing: 3px">2026</span>
+        </div>
+        <div class="card card-music">
+          <div class="vinyl" id="vinyl"></div>
+          <div style="flex: 1">
+            <h4 style="font-size: 0.9rem">Lagu Kita</h4>
+            <p style="font-size: 0.7rem">Now Playing...</p>
+          </div>
+          <button class="play-btn" onclick="toggleMusic()">
+            <i class="fas fa-pause" id="playIcon"></i>
+          </button>
+        </div>
+        <div class="card row-span-2 card-photo">
+          <img
+            src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1887&auto=format&fit=crop"
+            alt="Foto"
+          />
+        </div>
+        <div class="card col-span-2 card-letter">
+          <h2>Dear, Sayang...</h2>
+          <p>
+            Semoga apa yang kamu semogakan saat meniup lilin tadi, didengar oleh
+            semesta dan dikabulkan oleh Tuhan.<br /><br />Terima kasih sudah
+            lahir dan bertahan sejauh ini. Kamu hebat, kamu cantik, dan kamu
+            dicintai.<br /><br /><i>Happy Birthday! ❤️</i>
+          </p>
+        </div>
+        <div class="card card-stats">
+          <div class="stat-line">
+            <span>Age:</span> <span class="stat-val">Level Up!</span>
+          </div>
+          <div class="stat-line">
+            <span>Love:</span> <span class="stat-val">Infinite</span>
+          </div>
+          <div class="stat-line">
+            <span>Wish:</span> <span class="stat-val">Granted</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="end-show-btn-container">
+        <button class="btn-finish" onclick="finishShow()">
+          <i class="fas fa-chevron-up"></i>
+          Swipe Up to Finish
+        </button>
+      </div>
+    </div>
+
+    <div id="closing-screen">
+      <h1 class="final-title">I Love You<br />Forever</h1>
+      <p class="final-sub">Terima kasih telah menjadi bagian dari ceritaku.</p>
+      <button class="btn-replay" onclick="location.reload()">
+        <i class="fas fa-redo"></i> Putar Ulang
+      </button>
+    </div>
+
+    <audio id="audio" loop><source src="lagu.mp3" type="audio/mp3" /></audio>
+
+    <script>
+      // --- AUTO CONFETTI ---
+      window.onload = function () {
+        const duration = 3000;
+        const end = Date.now() + duration;
+        (function frame() {
+          confetti({
+            particleCount: 5,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 },
+            colors: ["#ff0a54", "#ff477e", "#ff7096", "#ff85a1", "#fbb1bd"],
+          });
+          confetti({
+            particleCount: 5,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 },
+            colors: ["#ff0a54", "#ff477e", "#ff7096", "#ff85a1", "#fbb1bd"],
+          });
+          if (Date.now() < end) {
+            requestAnimationFrame(frame);
+          }
+        })();
+      };
+
+      // --- BLOW CANDLE ---
+      function blowCandle() {
+        const flame = document.getElementById("flame");
+        const smoke = document.getElementById("smoke");
+        const overlay = document.getElementById("intro-overlay");
+        const mainContent = document.getElementById("main-content");
+        const audio = document.getElementById("audio");
+        const vinyl = document.getElementById("vinyl");
+
+        flame.style.opacity = "0";
+        smoke.style.animation = "smokeAnim 1.5s ease-out forwards";
+
+        audio
+          .play()
+          .then(() => {
+            vinyl.style.animationPlayState = "running";
+          })
+          .catch((e) => console.log("Audio perlu interaksi"));
+
+        setTimeout(() => {
+          overlay.classList.add("melt-away");
+          setTimeout(() => {
+            mainContent.style.opacity = "1";
+            document.body.style.overflow = "auto";
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+          }, 500);
+        }, 1000);
+      }
+
+      // --- STARS ---
+      function createStars() {
+        const container = document.getElementById("stars-container");
+        for (let i = 0; i < 150; i++) {
+          const star = document.createElement("div");
+          star.className = "star";
+          star.style.left = Math.random() * 100 + "%";
+          star.style.top = Math.random() * 100 + "%";
+          const size = Math.random() * 2 + 1;
+          star.style.width = size + "px";
+          star.style.height = size + "px";
+          star.style.animationDuration = Math.random() * 3 + 2 + "s";
+          star.style.animationDelay = Math.random() * 5 + "s";
+          container.appendChild(star);
+        }
+      }
+      createStars();
+
+      // --- POLAROIDS ---
+      const photoList = [
+        "https://images.unsplash.com/photo-1516575334481-f85287c2c81d?q=80&w=1887&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=1887&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1887&auto=format&fit=crop",
+      ];
+
+      function createPolaroids() {
+        const container = document.getElementById("polaroid-container");
+        for (let i = 0; i < 8; i++) {
+          const item = document.createElement("div");
+          item.className = "polaroid-item";
+          const frame = document.createElement("div");
+          frame.className = "polaroid-frame";
+          const img = document.createElement("img");
+          img.src = photoList[i % photoList.length];
+          frame.appendChild(img);
+          item.appendChild(frame);
+
+          const randomLeft = Math.random() * 90;
+          const randomDuration = Math.random() * 20 + 20;
+          const randomDelay = Math.random() * 30 * -1;
+
+          // Generate 4 Rotasi Berbeda
+          const rot0 = Math.random() * 40 - 20;
+          const rot1 = Math.random() * 40 - 20;
+          const rot2 = Math.random() * 40 - 20;
+          const rot3 = Math.random() * 40 - 20;
+
+          // Generate 3 Titik Goyangan (Sway)
+          const sway1 = Math.random() * 200 - 100;
+          const sway2 = Math.random() * 200 - 100;
+          const sway3 = Math.random() * 200 - 100;
+
+          item.style.left = `${randomLeft}%`;
+          item.style.animationDuration = `${randomDuration}s`;
+          item.style.animationDelay = `${randomDelay}s`;
+
+          item.style.setProperty("--rot-0", `${rot0}deg`);
+          item.style.setProperty("--rot-1", `${rot1}deg`);
+          item.style.setProperty("--rot-2", `${rot2}deg`);
+          item.style.setProperty("--rot-3", `${rot3}deg`);
+          item.style.setProperty("--sway-1", `${sway1}px`);
+          item.style.setProperty("--sway-2", `${sway2}px`);
+          item.style.setProperty("--sway-3", `${sway3}px`);
+
+          container.appendChild(item);
+        }
+      }
+      createPolaroids();
+
+      // --- MUSIC ---
+      let isPlaying = true;
+      function toggleMusic() {
+        const icon = document.getElementById("playIcon");
+        const vinyl = document.getElementById("vinyl");
+        const audio = document.getElementById("audio");
+        if (isPlaying) {
+          audio.pause();
+          vinyl.style.animationPlayState = "paused";
+          icon.classList.remove("fa-pause");
+          icon.classList.add("fa-play");
+        } else {
+          audio.play();
+          vinyl.style.animationPlayState = "running";
+          icon.classList.remove("fa-play");
+          icon.classList.add("fa-pause");
+        }
+        isPlaying = !isPlaying;
+      }
+
+      // --- FINISH SHOW LOGIC ---
+      function finishShow() {
+        const closingScreen = document.getElementById("closing-screen");
+        closingScreen.classList.add("active-closing");
+
+        // Confetti Finale
+        const duration = 3000;
+        const end = Date.now() + duration;
+        (function frame() {
+          confetti({
+            particleCount: 5,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 },
+            colors: ["#ff0a54", "#ffd700"],
+          });
+          confetti({
+            particleCount: 5,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 },
+            colors: ["#ff0a54", "#ffd700"],
+          });
+          if (Date.now() < end) {
+            requestAnimationFrame(frame);
+          }
+        })();
+      }
+    </script>
+  </body>
+</html>
