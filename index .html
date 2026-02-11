@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <title>Triyani: The Experience</title>
+    <title>Princess Amel | Birthday Edition</title>
 
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500&family=Italianno&family=Syne:wght@400;700;800&display=swap"
@@ -24,16 +24,17 @@
         --bg: #030303;
         --white: #ffffff;
         --grey: #888888;
-        --accent: #ff2e63; /* Neon Pink */
-        --cyan: #08d9d6; /* Neon Cyan */
-        --ease: cubic-bezier(0.19, 1, 0.22, 1); /* Expo Ease */
+        --accent: #ff0055; /* Neon Pink */
+        --cyan: #00f7ff; /* Neon Cyan */
+        --gold: #ffd700; /* Gold Luxury */
+        --ease: cubic-bezier(0.19, 1, 0.22, 1);
       }
 
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        cursor: none; /* Hide default cursor */
+        cursor: none; /* Hilangkan kursor asli */
       }
 
       body {
@@ -47,33 +48,40 @@
         align-items: center;
       }
 
-      /* --- 2. CUSTOM CURSOR --- */
+      /* --- 2. CUSTOM CURSOR (LOVE EDITION) --- */
       #cursor {
         position: fixed;
         top: 0;
         left: 0;
-        width: 20px;
-        height: 20px;
-        border: 1px solid var(--white);
-        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        /* Hapus border bulat lama */
+        /* border: 1px solid var(--white); */
+        /* border-radius: 50%; */
+
         pointer-events: none;
         z-index: 9999;
         transform: translate(-50%, -50%);
-        transition:
-          width 0.3s,
-          height 0.3s,
-          background 0.3s;
-        mix-blend-mode: difference;
-      }
-      #cursor.hovered {
-        width: 50px;
-        height: 50px;
-        background: var(--white);
-        opacity: 0.5;
-        border: none;
+        transition: transform 0.1s; /* Gerakan smooth */
+
+        /* Tampilan Love */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--accent); /* Warna Pink */
+        font-size: 24px; /* Ukuran Love */
+        text-shadow:
+          0 0 10px var(--accent),
+          0 0 20px var(--accent); /* Efek Glowing */
       }
 
-      /* --- 3. BACKGROUND NOISE & GRADIENT --- */
+      /* Efek saat menyentuh tombol/foto */
+      #cursor.hovered {
+        transform: translate(-50%, -50%) scale(1.8); /* Membesar */
+        text-shadow: 0 0 30px var(--accent); /* Glow makin terang */
+      }
+
+      /* --- 3. BACKGROUND --- */
       .noise {
         position: fixed;
         inset: 0;
@@ -102,7 +110,6 @@
         right: -100px;
         background: var(--cyan);
       }
-
       @keyframes orbFloat {
         0% {
           transform: translate(0, 0);
@@ -112,7 +119,7 @@
         }
       }
 
-      /* --- 4. INTRO SCENE --- */
+      /* --- 4. INTRO --- */
       #intro {
         position: fixed;
         inset: 0;
@@ -127,7 +134,26 @@
       #intro.hidden {
         transform: translateY(-100%);
       }
-
+      .neon-cake {
+        font-size: 5rem;
+        color: var(--bg);
+        -webkit-text-stroke: 2px var(--accent);
+        text-shadow: 0 0 20px var(--accent);
+        margin-bottom: 30px;
+        animation: pulseCake 1.5s infinite alternate;
+      }
+      @keyframes pulseCake {
+        0% {
+          text-shadow: 0 0 10px var(--accent);
+          transform: scale(1);
+        }
+        100% {
+          text-shadow:
+            0 0 40px var(--accent),
+            0 0 80px var(--accent);
+          transform: scale(1.1);
+        }
+      }
       .enter-btn {
         font-family: "Syne", sans-serif;
         font-size: 1.5rem;
@@ -143,8 +169,9 @@
         overflow: hidden;
         transition: 0.3s;
       }
+      /* Hover Default (Intro) */
       .enter-btn::before {
-        content: "ENTER SPACE";
+        content: "I Love You";
         position: absolute;
         top: 0;
         left: 0;
@@ -163,29 +190,17 @@
         width: 100%;
       }
 
-      .loading-line {
-        width: 1px;
-        height: 100px;
-        background: var(--grey);
-        margin-bottom: 20px;
-        animation: growLine 1.5s var(--ease) forwards;
-      }
-      @keyframes growLine {
-        from {
-          height: 0;
-        }
-        to {
-          height: 100px;
-        }
+      /* Fix Hover Tombol Replay */
+      #s4 .enter-btn::before {
+        content: "REPLAY";
       }
 
-      /* --- 5. MAIN CONTENT (SLIDER) --- */
+      /* --- 5. SLIDES GLOBAL --- */
       #app {
         width: 100%;
         height: 100%;
         position: relative;
       }
-
       .slide {
         position: absolute;
         inset: 0;
@@ -204,7 +219,7 @@
         transform: scale(1);
       }
 
-      /* -- SLIDE 1: HERO (PARALLAX) -- */
+      /* -- SLIDE 1: HERO -- */
       .hero-title {
         font-family: "Syne", sans-serif;
         font-size: 10vw;
@@ -212,10 +227,12 @@
         font-weight: 800;
         text-align: center;
         text-transform: uppercase;
-        color: var(--white);
         position: relative;
-        z-index: 1;
-        mix-blend-mode: overlay;
+        z-index: 2;
+        background: linear-gradient(to right, #ff0055, #ffd700, #00f7ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 30px rgba(255, 0, 85, 0.4);
       }
       .hero-img-container {
         position: absolute;
@@ -224,94 +241,158 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        z-index: 0;
+        z-index: 4;
         overflow: hidden;
+        border: 2px solid var(--accent);
+        box-shadow: 0 0 40px rgba(255, 0, 85, 0.4);
+        border-radius: 10px;
       }
       .hero-img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        filter: grayscale(100%) contrast(120%);
+        filter: grayscale(0%) contrast(110%);
         transition: 0.5s;
       }
       .hero-img-container:hover .hero-img {
-        filter: grayscale(0%);
         transform: scale(1.1);
       }
 
-      .floating-date {
+      .bday-badge {
         position: absolute;
-        bottom: 10%;
-        right: 10%;
-        font-family: "Italianno", cursive;
-        font-size: 3rem;
-        color: var(--accent);
-        transform: rotate(-10deg);
+        top: 15%;
+        right: 15%;
+        z-index: 3;
+        background: var(--accent);
+        color: #fff;
+        backdrop-filter: blur(10px);
+        border: none;
+        padding: 10px 25px;
+        border-radius: 50px;
+        font-family: "Syne";
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 0.8rem;
+        box-shadow: 0 0 20px rgba(255, 0, 85, 0.6);
+        animation: float 3s ease-in-out infinite;
+      }
+      .balloons-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .balloon {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.6;
+        background: radial-gradient(
+          circle at 30% 30%,
+          #fff,
+          var(--color) 40%,
+          #000 90%
+        );
+        box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.5);
+        animation: floatUp var(--speed) linear infinite;
+      }
+      .balloon::after {
+        content: "";
+        position: absolute;
+        bottom: -20px;
+        left: 50%;
+        width: 1px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.3);
+      }
+      @keyframes floatUp {
+        from {
+          transform: translateY(100vh) rotate(0deg);
+        }
+        to {
+          transform: translateY(-20vh) rotate(20deg);
+        }
       }
 
-      /* -- SLIDE 2: 3D CAROUSEL -- */
-      .carousel-scene {
+      /* -- SLIDE 2: MODERN MOSAIC GALLERY -- */
+      .mosaic-gallery {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: 120px;
+        gap: 10px;
+        width: 90%;
+        max-width: 900px;
+        max-height: 80vh;
         perspective: 1000px;
-        width: 100%;
-        height: 60%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        padding: 10px;
       }
-      .carousel {
-        width: 250px;
-        height: 350px;
+
+      .mosaic-item {
         position: relative;
-        transform-style: preserve-3d;
-        transition: transform 1s;
-      }
-      .carousel-item {
-        position: absolute;
-        width: 250px;
-        height: 350px;
-        background: #fff;
-        border: 5px solid white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 2rem;
-        color: black;
+        border-radius: 12px;
         overflow: hidden;
-        /* Positioning is handled by JS */
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: #000;
+        transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        cursor: pointer;
       }
-      .carousel-item img {
+      .wide {
+        grid-column: span 2;
+      }
+      .tall {
+        grid-row: span 2;
+      }
+      .big {
+        grid-column: span 2;
+        grid-row: span 2;
+      }
+
+      .mosaic-item img,
+      .mosaic-item video {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        filter: grayscale(100%) brightness(0.7);
+        transition: 0.5s;
+        transform: scale(1.01);
       }
 
-      .carousel-nav {
-        margin-top: 50px;
-        display: flex;
-        gap: 20px;
+      .mosaic-item:hover {
+        transform: scale(1.05) translateZ(20px);
         z-index: 10;
+        border-color: var(--accent);
+        box-shadow: 0 10px 40px rgba(255, 0, 85, 0.5);
       }
-      .c-btn {
-        background: transparent;
-        border: 1px solid var(--white);
+      .mosaic-item:hover img,
+      .mosaic-item:hover video {
+        filter: grayscale(0%) brightness(1.1);
+      }
+
+      .date-badge {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.6rem;
+        font-family: "Syne";
         color: var(--white);
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        opacity: 0;
+        transform: translateY(10px);
         transition: 0.3s;
       }
-      .c-btn:hover {
-        background: var(--white);
-        color: var(--bg);
+      .mosaic-item:hover .date-badge {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       /* -- SLIDE 3: MUSIC -- */
       .music-wrapper {
         text-align: center;
         position: relative;
+        width: 100%;
+        max-width: 500px;
       }
       .vinyl-record {
         width: 300px;
@@ -325,6 +406,7 @@
         margin: 0 auto 30px;
         position: relative;
         box-shadow: 0 0 50px rgba(255, 46, 99, 0.2);
+        cursor: pointer;
       }
       .vinyl-img {
         width: 120px;
@@ -349,18 +431,50 @@
       .playing .vinyl-img {
         animation-play-state: running;
       }
-
+      .music-controls-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 20px;
+        padding: 0 20px;
+      }
+      .song-info {
+        flex-grow: 1;
+        text-align: center;
+      }
       .song-title {
         font-family: "Syne", sans-serif;
-        font-size: 2rem;
+        font-size: 1.8rem;
+        font-weight: 700;
         margin-bottom: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .play-trigger {
         font-family: "Inter", sans-serif;
         letter-spacing: 2px;
-        font-size: 0.8rem;
-        border-bottom: 1px solid var(--white);
-        padding-bottom: 5px;
+        font-size: 0.7rem;
+        color: var(--grey);
+        text-transform: uppercase;
+      }
+      .ctrl-btn {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--white);
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 0.3s;
+        font-size: 1rem;
+      }
+      .ctrl-btn:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+        transform: scale(1.1);
       }
 
       /* -- SLIDE 4: MESSAGE -- */
@@ -382,11 +496,8 @@
         line-height: 1.6;
         margin-bottom: 30px;
       }
-      .highlight {
-        color: var(--accent);
-      }
 
-      /* --- 6. NAVIGATION (MINIMAL DOTS) --- */
+      /* -- NAVIGATION -- */
       .nav-dots {
         position: fixed;
         right: 40px;
@@ -408,10 +519,7 @@
       .dot::after {
         content: "";
         position: absolute;
-        top: -5px;
-        left: -5px;
-        right: -5px;
-        bottom: -5px;
+        inset: -5px;
         border: 1px solid transparent;
         border-radius: 50%;
         transition: 0.3s;
@@ -425,7 +533,6 @@
         transform: scale(1.5);
       }
 
-      /* --- ANIMATIONS --- */
       @keyframes spin {
         100% {
           transform: rotate(360deg);
@@ -441,8 +548,17 @@
           opacity: 0;
         }
       }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
 
-      /* Mobile Adjustments */
+      /* MOBILE RESPONSIVE */
       @media (max-width: 768px) {
         .hero-title {
           font-size: 15vw;
@@ -454,27 +570,38 @@
         .nav-dots {
           right: 20px;
         }
-        .carousel {
-          width: 200px;
-          height: 300px;
-        }
+        /* Kursor love tetap ada tapi kecil, atau sembunyikan jika mengganggu sentuhan */
         #cursor {
           display: none;
-        } /* Hide custom cursor on mobile */
+        }
         * {
           cursor: auto;
+        }
+        .music-wrapper {
+          transform: scale(0.9);
+        }
+
+        /* Adjust Mosaic di HP */
+        .mosaic-gallery {
+          grid-template-columns: repeat(2, 1fr);
+          grid-auto-rows: 100px;
+          height: 60vh;
+          overflow-y: auto;
         }
       }
     </style>
   </head>
   <body>
-    <div id="cursor"></div>
+    <div id="cursor"><i class="fas fa-heart"></i></div>
+
     <div class="noise"></div>
     <div class="gradient-orb orb-1"></div>
     <div class="gradient-orb orb-2"></div>
-    <audio id="audio" loop><source src="lagu.mp3" type="audio/mp3" /></audio>
+
+    <audio id="audio"></audio>
 
     <div id="intro">
+      <i class="fas fa-birthday-cake neon-cake"></i>
       <div class="loading-line"></div>
       <button
         class="enter-btn"
@@ -482,78 +609,86 @@
         onmouseleave="unhoverCursor()"
         onclick="enterSpace()"
       >
-        ENTER SPACE
+        HAI SAYANG
       </button>
     </div>
 
     <div id="app">
       <div class="slide active" id="s1">
+        <div class="balloons-bg" id="balloonContainer"></div>
         <div class="hero-img-container" id="heroImg">
-          <img
-            src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1887&auto=format&fit=crop"
-            class="hero-img"
-          />
+          <img src="utama.png" class="hero-img" />
         </div>
         <h1 class="hero-title">TRIYANI<br />PUTRI</h1>
-        <div class="floating-date">14th Feb</div>
+        <div class="bday-badge">
+          <i class="fas fa-crown"></i> Happy Birthday
+        </div>
       </div>
 
       <div class="slide" id="s2">
         <h2
           style="
             font-family: &quot;Syne&quot;;
-            margin-bottom: 40px;
+            margin-bottom: 25px;
             letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(255, 0, 85, 0.5);
           "
         >
-          MEMORIES
+          OUR MEMORIES
         </h2>
-        <div class="carousel-scene">
-          <div class="carousel" id="carousel">
-            <div class="carousel-item">
-              <img
-                src="https://images.unsplash.com/photo-1516575334481-f85287c2c81d?q=80&w=1887&auto=format&fit=crop"
-              />
-            </div>
-            <div class="carousel-item">
-              <img
-                src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=1887&auto=format&fit=crop"
-              />
-            </div>
-            <div class="carousel-item">
-              <img
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop"
-              />
-            </div>
-            <div class="carousel-item">
-              <img
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop"
-              />
-            </div>
-            <div class="carousel-item">
-              <img
-                src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1887&auto=format&fit=crop"
-              />
-            </div>
+
+        <div class="mosaic-gallery">
+          <div class="mosaic-item big" onmouseenter="hoverCursor()">
+            <img
+              src="1.jpeg"
+            />
+            <div class="date-badge">The Beginning</div>
           </div>
-        </div>
-        <div class="carousel-nav">
-          <button
-            class="c-btn"
-            onclick="rotateCarousel(-1)"
-            onmouseenter="hoverCursor()"
-            onmouseleave="unhoverCursor()"
-          >
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <button
-            class="c-btn"
-            onclick="rotateCarousel(1)"
-            onmouseenter="hoverCursor()"
-            onmouseleave="unhoverCursor()"
-          >
-            <i class="fas fa-chevron-right"></i>
-          </button>
+
+          <div class="mosaic-item wide" onmouseenter="hoverCursor()">
+            <img
+              src="4.jpeg"
+            />
+            <div class="date-badge">Funny Moment</div>
+          </div>
+
+          <div class="mosaic-item" onmouseenter="hoverCursor()">
+            <img
+              src="2.jpeg"
+            />
+          </div>
+
+          <div class="mosaic-item" onmouseenter="hoverCursor()">
+            <img
+              src="3.jpeg"
+            />
+          </div>
+
+          <div class="mosaic-item tall" onmouseenter="hoverCursor()">
+            <img
+              src="9.jpeg"
+            />
+            <div class="date-badge">Beautiful</div>
+          </div>
+
+          <div class="mosaic-item" onmouseenter="hoverCursor()">
+            <img
+              src="8.jpeg"
+            />
+          </div>
+
+          <div class="mosaic-item" onmouseenter="hoverCursor()">
+            <img
+              src="6.jpeg"
+            />
+          </div>
+
+          <div class="mosaic-item wide" onmouseenter="hoverCursor()">
+            <img
+              src="5.jpeg"
+            />
+            <div class="date-badge">Forever Us</div>
+          </div>
         </div>
       </div>
 
@@ -564,39 +699,67 @@
             id="vinylContainer"
             onclick="toggleMusic()"
             onmouseenter="hoverCursor()"
-            onmouseleave="unhoverCursor()"
           >
             <div class="visualizer-ring"></div>
             <div class="visualizer-ring" style="animation-delay: 0.5s"></div>
             <img
-              src="https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=2070&auto=format&fit=crop"
+              src="7.png"
               class="vinyl-img"
               id="vinylImg"
             />
           </div>
-          <div class="song-title">Our Soundtrack</div>
-          <div class="play-trigger" id="playText">CLICK DISC TO PLAY</div>
+
+          <div class="music-controls-container">
+            <button
+              class="ctrl-btn"
+              onclick="changeSong(-1)"
+              onmouseenter="hoverCursor()"
+            >
+              <i class="fas fa-step-backward"></i>
+            </button>
+            <div class="song-info">
+              <div class="song-title" id="songTitle">Song Title</div>
+              <div class="play-trigger" id="playText">CLICK DISC TO PLAY</div>
+            </div>
+            <button
+              class="ctrl-btn"
+              onclick="changeSong(1)"
+              onmouseenter="hoverCursor()"
+            >
+              <i class="fas fa-step-forward"></i>
+            </button>
+          </div>
         </div>
       </div>
 
       <div class="slide" id="s4">
         <div class="message-box">
           <div class="big-quote">
-            "YOU ARE MY<br /><span style="color: var(--accent)">UNIVERSE</span>"
+            "FOREVER<br />
+            <span style="color: var(--accent)">WITH YOU</span>"
           </div>
           <p class="body-text">
-            Selamat ulang tahun, Triyani. Di tengah milyaran bintang, kamu
-            adalah satu-satunya yang paling bersinar di mataku. Terima kasih
-            sudah ada.
+            Selamat ulang tahun sayangkuu❤
             <br /><br />
-            <i>Happy Valentine's Day.</i>
+            Jika semesta memberiku satu kesempatan untuk meminta, aku tidak akan
+            meminta dunia. Aku hanya akan meminta agar kita tak pernah selesai.
+            <br />
+            Terima kasih telah menjadi bagian terbaik dari hidupku.
+            <br /><br />
+            Semoga Tuhan senantiasa menjagamu saat tanganku tak sampai untuk
+            memelukmu. Semoga bahagiamu tak pernah surut, langkahmu selalu
+            diringankan, dan semoga segala hal baik di dunia ini selalu berpihak
+            padamu.
+            <br /><br />
+            <i>Happy Valentine's Day, Sayang.</i>
+            <br />
+            <b>I love you forever, Sayangku.</b>
           </p>
           <button
             class="enter-btn"
             style="font-size: 1rem; padding: 10px 30px"
             onclick="replay()"
             onmouseenter="hoverCursor()"
-            onmouseleave="unhoverCursor()"
           >
             REPLAY
           </button>
@@ -609,36 +772,50 @@
         class="dot active"
         onclick="goToSlide(0)"
         onmouseenter="hoverCursor()"
-        onmouseleave="unhoverCursor()"
       ></div>
       <div
         class="dot"
         onclick="goToSlide(1)"
         onmouseenter="hoverCursor()"
-        onmouseleave="unhoverCursor()"
       ></div>
       <div
         class="dot"
         onclick="goToSlide(2)"
         onmouseenter="hoverCursor()"
-        onmouseleave="unhoverCursor()"
       ></div>
       <div
         class="dot"
         onclick="goToSlide(3)"
         onmouseenter="hoverCursor()"
-        onmouseleave="unhoverCursor()"
       ></div>
     </div>
 
     <script>
-      // --- 1. CURSOR LOGIC ---
+      // --- 1. SETUP BALLOONS ---
+      const balloonContainer = document.getElementById("balloonContainer");
+      const colors = ["#ff0055", "#ffd700", "#00f7ff"];
+
+      for (let i = 0; i < 15; i++) {
+        const b = document.createElement("div");
+        b.className = "balloon";
+        const size = Math.random() * 40 + 30;
+        b.style.width = size + "px";
+        b.style.height = size * 1.2 + "px";
+        b.style.left = Math.random() * 100 + "%";
+        b.style.setProperty(
+          "--color",
+          colors[Math.floor(Math.random() * colors.length)],
+        );
+        b.style.setProperty("--speed", Math.random() * 10 + 10 + "s");
+        b.style.animationDelay = Math.random() * 5 + "s";
+        balloonContainer.appendChild(b);
+      }
+
+      // --- 2. CURSOR LOGIC ---
       const cursor = document.getElementById("cursor");
       document.addEventListener("mousemove", (e) => {
         cursor.style.left = e.clientX + "px";
         cursor.style.top = e.clientY + "px";
-
-        // Parallax Effect on Hero
         const heroImg = document.getElementById("heroImg");
         if (heroImg) {
           const x = (window.innerWidth - e.pageX * 2) / 50;
@@ -646,7 +823,6 @@
           heroImg.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px)`;
         }
       });
-
       function hoverCursor() {
         cursor.classList.add("hovered");
       }
@@ -654,7 +830,36 @@
         cursor.classList.remove("hovered");
       }
 
-      // --- 2. NAVIGATION LOGIC ---
+      // --- 3. INTRO LOGIC ---
+      function enterSpace() {
+        document.getElementById("intro").classList.add("hidden");
+        // Confetti
+        var end = Date.now() + 3 * 1000;
+        (function frame() {
+          confetti({
+            particleCount: 5,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 },
+            colors: colors,
+          });
+          confetti({
+            particleCount: 5,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 },
+            colors: colors,
+          });
+          if (Date.now() < end) requestAnimationFrame(frame);
+        })();
+        // Start Audio
+        playAudio();
+      }
+      function replay() {
+        location.reload();
+      }
+
+      // --- 4. NAVIGATION ---
       const slides = document.querySelectorAll(".slide");
       const dots = document.querySelectorAll(".dot");
       let currentSlide = 0;
@@ -662,88 +867,81 @@
       function goToSlide(index) {
         slides[currentSlide].classList.remove("active");
         dots[currentSlide].classList.remove("active");
-
         currentSlide = index;
-
         slides[currentSlide].classList.add("active");
         dots[currentSlide].classList.add("active");
       }
 
-      // --- 3. INTRO LOGIC ---
-      function enterSpace() {
-        document.getElementById("intro").classList.add("hidden");
+      // --- 5. MUSIC PLAYER SYSTEM ---
+      // PASTIKAN FILE ADA DI FOLDER YANG SAMA
+      const playlist = [
+        { title: "Everything You Are", src: "lagu.mp3", cover: "eua.png" },
+        { title: "Masa Ini, Nanti...", src: "lagu2.mp3", cover: "nuca.png" },
+        { title: "Cincin", src: "lagu3.mp3", cover: "cnc.png" },
+      ];
 
-        // Confetti
-        confetti({
-          particleCount: 150,
-          spread: 100,
-          origin: { y: 0.6 },
-          colors: ["#ff2e63", "#08d9d6"],
-        });
+      let currentSongIndex = 0;
+      let isPlaying = false;
+      const audio = document.getElementById("audio");
+      const vinylContainer = document.getElementById("vinylContainer");
+      const vinylImg = document.getElementById("vinylImg");
+      const songTitle = document.getElementById("songTitle");
+      const playText = document.getElementById("playText");
 
-        // Try Autoplay
-        const audio = document.getElementById("audio");
+      loadSong(currentSongIndex);
+
+      function loadSong(index) {
+        const song = playlist[index];
+        audio.src = song.src;
+        songTitle.innerText = song.title;
+        vinylImg.src = song.cover;
+      }
+
+      function playAudio() {
         audio
           .play()
           .then(() => {
             isPlaying = true;
             updateMusicUI();
           })
-          .catch((e) => console.log("Audio waiting"));
+          .catch((e) => console.log("Audio permission need interaction"));
       }
-
-      function replay() {
-        location.reload();
-      }
-
-      // --- 4. 3D CAROUSEL LOGIC ---
-      const carousel = document.getElementById("carousel");
-      const items = document.querySelectorAll(".carousel-item");
-      const radius = 250; // Jarak dari pusat
-      let angle = 0;
-
-      function setupCarousel() {
-        const theta = 360 / items.length;
-        items.forEach((item, index) => {
-          item.style.transform = `rotateY(${index * theta}deg) translateZ(${radius}px)`;
-        });
-      }
-      setupCarousel();
-
-      function rotateCarousel(direction) {
-        const theta = 360 / items.length;
-        angle += direction * theta;
-        carousel.style.transform = `translateZ(-${radius}px) rotateY(${angle}deg)`;
-      }
-
-      // --- 5. MUSIC LOGIC ---
-      let isPlaying = false;
-      const audio = document.getElementById("audio");
-      const vinylContainer = document.getElementById("vinylContainer");
-      const vinylImg = document.getElementById("vinylImg");
-      const playText = document.getElementById("playText");
 
       function toggleMusic() {
         if (isPlaying) {
           audio.pause();
-          playText.innerText = "CLICK DISC TO PLAY";
         } else {
           audio.play();
-          playText.innerText = "NOW PLAYING";
         }
         isPlaying = !isPlaying;
         updateMusicUI();
+      }
+
+      function changeSong(direction) {
+        currentSongIndex =
+          (currentSongIndex + direction + playlist.length) % playlist.length;
+        loadSong(currentSongIndex);
+        if (isPlaying) {
+          audio.play();
+        } else {
+          updateMusicUI();
+        }
       }
 
       function updateMusicUI() {
         if (isPlaying) {
           vinylContainer.classList.add("playing");
           vinylImg.style.animationPlayState = "running";
+          playText.innerText = "NOW PLAYING";
         } else {
           vinylContainer.classList.remove("playing");
           vinylImg.style.animationPlayState = "paused";
+          playText.innerText = "CLICK DISC TO PLAY";
         }
       }
+      audio.addEventListener("ended", () => {
+        changeSong(1);
+      });
     </script>
   </body>
 </html>
